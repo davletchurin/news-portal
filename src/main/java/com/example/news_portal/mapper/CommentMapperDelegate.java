@@ -1,0 +1,29 @@
+package com.example.news_portal.mapper;
+
+import com.example.news_portal.model.Comment;
+import com.example.news_portal.service.NewsService;
+import com.example.news_portal.service.UserService;
+import com.example.news_portal.web.model.UpsertCommentRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public abstract class CommentMapperDelegate implements CommentMapper {
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private NewsService newsService;
+    @Override
+    public Comment requestToComment(UpsertCommentRequest request) {
+        Comment comment = new Comment();
+        comment.setDescription(request.getDescription());
+        comment.setUser(userService.findById(request.getUserId()));
+        comment.setNews(newsService.findById(request.getNewsId()));
+        return comment;
+    }
+
+    @Override
+    public Comment requestToComment(Long commentId, UpsertCommentRequest request) {
+        Comment comment = requestToComment(request);
+        comment.setId(commentId);
+        return comment;
+    }
+}

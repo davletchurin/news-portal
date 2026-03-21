@@ -1,0 +1,33 @@
+package com.example.news_portal.mapper;
+
+import com.example.news_portal.model.News;
+import com.example.news_portal.service.NewsCategoryService;
+import com.example.news_portal.service.UserService;
+import com.example.news_portal.web.model.UpsertNewsRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public abstract class NewsMapperDelegate implements NewsMapper {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private NewsCategoryService categoryService;
+
+    @Override
+    public News requestToNews(UpsertNewsRequest request) {
+        News news = new News();
+        news.setTitle(request.getTitle());
+        news.setDescription(request.getDescription());
+        news.setUser(userService.findById(request.getUserId()));
+        news.setCategory(categoryService.findById(request.getCategoryId()));
+        return news;
+    }
+
+    @Override
+    public News requestToNews(Long newsId, UpsertNewsRequest request) {
+        News news = requestToNews(request);
+        news.setId(request.getUserId());
+        return news;
+    }
+}

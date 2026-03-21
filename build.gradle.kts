@@ -24,6 +24,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	runtimeOnly("org.postgresql:postgresql")
 
+	implementation("org.mapstruct:mapstruct:1.5.3.Final")
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
+
 	compileOnly("org.projectlombok:lombok:1.18.44")
 	annotationProcessor("org.projectlombok:lombok:1.18.44")
 	testCompileOnly("org.projectlombok:lombok:1.18.44")

@@ -31,6 +31,10 @@ public class News {
     @JoinColumn(name = "category_id")
     private NewsCategory category;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL)
     List<Comment> comments = new ArrayList<>();
 
