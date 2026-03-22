@@ -1,6 +1,6 @@
 package com.example.news_portal.service;
 
-import com.example.news_portal.model.User;
+import com.example.news_portal.entity.User;
 
 import java.util.List;
 

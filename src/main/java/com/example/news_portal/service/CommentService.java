@@ -1,6 +1,6 @@
 package com.example.news_portal.service;
 
-import com.example.news_portal.model.Comment;
+import com.example.news_portal.entity.Comment;
 
 import java.util.List;
 

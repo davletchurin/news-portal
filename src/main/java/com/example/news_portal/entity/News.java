@@ -1,4 +1,4 @@
-package com.example.news_portal.model;
+package com.example.news_portal.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

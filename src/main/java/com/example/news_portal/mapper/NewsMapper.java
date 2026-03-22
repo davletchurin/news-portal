@@ -1,6 +1,6 @@
 package com.example.news_portal.mapper;
 
-import com.example.news_portal.model.News;
+import com.example.news_portal.entity.News;
 import com.example.news_portal.web.model.NewsListResponse;
 import com.example.news_portal.web.model.NewsResponse;
 import com.example.news_portal.web.model.UpsertNewsRequest;
@@ -12,11 +12,13 @@ import org.mapstruct.ReportingPolicy;
 import java.util.List;
 
 @DecoratedWith(NewsMapperDelegate.class)
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        uses = {CommentMapper.class})
 public interface NewsMapper {
     News requestToNews(UpsertNewsRequest request);
     @Mapping(source = "newsId", target = "id")
     News requestToNews(Long newsId, UpsertNewsRequest request);
+    NewsResponse newsToResponse(News news);
     List<NewsResponse> newsListToResponseList(List<News> news);
     default NewsListResponse newsListToNewsListResponse(List<News> news) {
         NewsListResponse response = new NewsListResponse();

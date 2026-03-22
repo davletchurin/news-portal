@@ -1,6 +1,6 @@
 package com.example.news_portal.service;
 
-import com.example.news_portal.model.NewsCategory;
+import com.example.news_portal.entity.NewsCategory;
 
 import java.util.List;
 

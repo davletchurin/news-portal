@@ -1,6 +1,6 @@
 package com.example.news_portal.mapper;
 
-import com.example.news_portal.model.Comment;
+import com.example.news_portal.entity.Comment;
 import com.example.news_portal.service.NewsService;
 import com.example.news_portal.service.UserService;
 import com.example.news_portal.web.model.UpsertCommentRequest;

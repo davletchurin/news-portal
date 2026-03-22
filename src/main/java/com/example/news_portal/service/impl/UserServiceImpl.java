@@ -1,7 +1,7 @@
 package com.example.news_portal.service.impl;
 
 import com.example.news_portal.exception.EntityNotFoundException;
-import com.example.news_portal.model.User;
+import com.example.news_portal.entity.User;
 import com.example.news_portal.repository.UserRepository;
 import com.example.news_portal.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Long id) {
         return userRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException(MessageFormat.format("User with ID {0} not found", id))
+                new EntityNotFoundException(MessageFormat.format("User with ID {0} not found!", id))
         );
     }
 

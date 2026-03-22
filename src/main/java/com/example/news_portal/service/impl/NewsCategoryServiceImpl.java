@@ -1,7 +1,7 @@
 package com.example.news_portal.service.impl;
 
 import com.example.news_portal.exception.EntityNotFoundException;
-import com.example.news_portal.model.NewsCategory;
+import com.example.news_portal.entity.NewsCategory;
 import com.example.news_portal.repository.NewsCategoryRepository;
 import com.example.news_portal.service.NewsCategoryService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class NewsCategoryServiceImpl implements NewsCategoryService {
     @Override
     public NewsCategory findById(Long id) {
         return categoryRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException(MessageFormat.format("Comment with ID {0} not found", id))
+                new EntityNotFoundException(MessageFormat.format("Comment with ID {0} not found!", id))
         );
     }
 

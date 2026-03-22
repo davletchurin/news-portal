@@ -1,7 +1,7 @@
 package com.example.news_portal.service.impl;
 
 import com.example.news_portal.exception.EntityNotFoundException;
-import com.example.news_portal.model.News;
+import com.example.news_portal.entity.News;
 import com.example.news_portal.repository.NewsRepository;
 import com.example.news_portal.service.NewsService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public News findById(Long id) {
         return newsRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException(MessageFormat.format("News with ID {0} not found", id))
+                new EntityNotFoundException(MessageFormat.format("News with ID {0} not found!", id))
         );
     }
 

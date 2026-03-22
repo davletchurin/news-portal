@@ -1,6 +1,6 @@
 package com.example.news_portal.mapper;
 
-import com.example.news_portal.model.News;
+import com.example.news_portal.entity.News;
 import com.example.news_portal.service.NewsCategoryService;
 import com.example.news_portal.service.UserService;
 import com.example.news_portal.web.model.UpsertNewsRequest;
