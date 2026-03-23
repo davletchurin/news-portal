@@ -4,6 +4,7 @@ import com.example.news_portal.exception.EntityNotFoundException;
 import com.example.news_portal.entity.NewsCategory;
 import com.example.news_portal.repository.NewsCategoryRepository;
 import com.example.news_portal.service.NewsCategoryService;
+import com.example.news_portal.utils.BeanUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,9 @@ public class NewsCategoryServiceImpl implements NewsCategoryService {
 
     @Override
     public NewsCategory update(NewsCategory category) {
-        return categoryRepository.save(category);
+        NewsCategory existedCategory = findById(category.getId());
+        BeanUtils.copyNotNullProperties(category, existedCategory);
+        return categoryRepository.save(existedCategory);
     }
 
     @Override

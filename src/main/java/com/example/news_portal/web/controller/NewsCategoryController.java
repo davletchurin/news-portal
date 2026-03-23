@@ -6,6 +6,7 @@ import com.example.news_portal.service.NewsCategoryService;
 import com.example.news_portal.web.model.NewsCategoryListResponse;
 import com.example.news_portal.web.model.NewsCategoryResponse;
 import com.example.news_portal.web.model.UpsertNewsCategoryRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class NewsCategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<NewsCategoryResponse> create(@RequestBody UpsertNewsCategoryRequest request) {
+    public ResponseEntity<NewsCategoryResponse> create(@RequestBody @Valid UpsertNewsCategoryRequest request) {
         NewsCategory createdCategory = categoryService.save(categoryMapper.requestToNewsCategory(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 categoryMapper.newsCategoryToResponse(createdCategory)
@@ -42,7 +43,7 @@ public class NewsCategoryController {
 
     @PutMapping("/{id}")
     public ResponseEntity<NewsCategoryResponse> update(@PathVariable Long id,
-                                                       @RequestBody UpsertNewsCategoryRequest request) {
+                                                       @RequestBody @Valid UpsertNewsCategoryRequest request) {
         NewsCategory updatedCategory = categoryService.update(categoryMapper.requestToNewsCategory(id, request));
         return ResponseEntity.ok(
                 categoryMapper.newsCategoryToResponse(updatedCategory)

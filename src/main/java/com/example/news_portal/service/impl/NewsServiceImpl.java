@@ -1,9 +1,14 @@
 package com.example.news_portal.service.impl;
 
+import com.example.news_portal.entity.NewsCategory;
+import com.example.news_portal.entity.User;
 import com.example.news_portal.exception.EntityNotFoundException;
 import com.example.news_portal.entity.News;
 import com.example.news_portal.repository.NewsRepository;
+import com.example.news_portal.service.NewsCategoryService;
 import com.example.news_portal.service.NewsService;
+import com.example.news_portal.service.UserService;
+import com.example.news_portal.utils.BeanUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NewsServiceImpl implements NewsService {
     private final NewsRepository newsRepository;
+    private final NewsCategoryService categoryService;
+    private final UserService userService;
     @Override
     public List<News> findAll() {
         return newsRepository.findAll();
@@ -28,12 +35,22 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public News save(News news) {
+        NewsCategory category = categoryService.findById(news.getCategory().getId());
+        User user = userService.findById(news.getUser().getId());
+        news.setCategory(category);
+        news.setUser(user);
         return newsRepository.save(news);
     }
 
     @Override
     public News update(News news) {
-        return newsRepository.save(news);
+        NewsCategory category = categoryService.findById(news.getCategory().getId());
+        User user = userService.findById(news.getUser().getId());
+        News existedNews = findById(news.getId());
+        BeanUtils.copyNotNullProperties(news, existedNews);
+        existedNews.setCategory(category);
+        existedNews.setUser(user);
+        return newsRepository.save(existedNews);
     }
 
     @Override

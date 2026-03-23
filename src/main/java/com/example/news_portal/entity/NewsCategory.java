@@ -1,10 +1,7 @@
 package com.example.news_portal.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 public class NewsCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,5 +22,7 @@ public class NewsCategory {
     private String categoryName;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @Builder.Default
+    @ToString.Exclude
     List<News> news = new ArrayList<>();
 }

@@ -22,15 +22,18 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	runtimeOnly("org.postgresql:postgresql")
-
-	implementation("org.mapstruct:mapstruct:1.5.3.Final")
-	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
 
 	compileOnly("org.projectlombok:lombok:1.18.44")
 	annotationProcessor("org.projectlombok:lombok:1.18.44")
 	testCompileOnly("org.projectlombok:lombok:1.18.44")
 	testAnnotationProcessor("org.projectlombok:lombok:1.18.44")
+
+	implementation("org.mapstruct:mapstruct:1.5.3.Final")
+	annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
+
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.16")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")

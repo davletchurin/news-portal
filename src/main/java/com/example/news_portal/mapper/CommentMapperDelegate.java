@@ -3,6 +3,7 @@ package com.example.news_portal.mapper;
 import com.example.news_portal.entity.Comment;
 import com.example.news_portal.service.NewsService;
 import com.example.news_portal.service.UserService;
+import com.example.news_portal.web.model.CommentResponse;
 import com.example.news_portal.web.model.UpsertCommentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -25,5 +26,15 @@ public abstract class CommentMapperDelegate implements CommentMapper {
         Comment comment = requestToComment(request);
         comment.setId(commentId);
         return comment;
+    }
+
+    @Override
+    public CommentResponse commentToResponse(Comment comment) {
+        CommentResponse response = new CommentResponse();
+        response.setId(comment.getId());
+        response.setDescription(comment.getDescription());
+        response.setNewsId(comment.getNews().getId());
+        response.setUserId(comment.getUser().getId());
+        return response;
     }
 }

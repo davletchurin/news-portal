@@ -6,6 +6,7 @@ import com.example.news_portal.service.CommentService;
 import com.example.news_portal.web.model.CommentListResponse;
 import com.example.news_portal.web.model.CommentResponse;
 import com.example.news_portal.web.model.UpsertCommentRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<CommentResponse> create(@RequestBody UpsertCommentRequest request) {
+    public ResponseEntity<CommentResponse> create(@RequestBody @Valid UpsertCommentRequest request) {
         Comment createdComment = commentService.save(commentMapper.requestToComment(request));
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 commentMapper.commentToResponse(createdComment)
@@ -42,7 +43,7 @@ public class CommentController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CommentResponse> update(@PathVariable Long id,
-                                                  @RequestBody UpsertCommentRequest request) {
+                                                  @RequestBody @Valid UpsertCommentRequest request) {
         Comment updatedComment = commentService.update(commentMapper.requestToComment(id, request));
         return ResponseEntity.ok(
                 commentMapper.commentToResponse(updatedComment)

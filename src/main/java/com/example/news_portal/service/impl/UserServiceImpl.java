@@ -4,6 +4,7 @@ import com.example.news_portal.exception.EntityNotFoundException;
 import com.example.news_portal.entity.User;
 import com.example.news_portal.repository.UserRepository;
 import com.example.news_portal.service.UserService;
+import com.example.news_portal.utils.BeanUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     @Override
     public List<User> findAll() {
-        return null;
+        return userRepository.findAll();
     }
 
     @Override
@@ -33,7 +34,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) {
-        return userRepository.save(user);
+        User existedUser = findById(user.getId());
+        BeanUtils.copyNotNullProperties(user, existedUser);
+        return userRepository.save(existedUser);
     }
 
     @Override
