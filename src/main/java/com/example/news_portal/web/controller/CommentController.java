@@ -1,5 +1,6 @@
 package com.example.news_portal.web.controller;
 
+import com.example.news_portal.aop.CommentAccessVerifiable;
 import com.example.news_portal.entity.Comment;
 import com.example.news_portal.mapper.CommentMapper;
 import com.example.news_portal.service.CommentService;
@@ -41,18 +42,20 @@ public class CommentController {
         );
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CommentResponse> update(@PathVariable Long id,
+    @CommentAccessVerifiable
+    @PutMapping("/{commentId}/{userId}")
+    public ResponseEntity<CommentResponse> update(@PathVariable Long commentId,
                                                   @RequestBody @Valid UpsertCommentRequest request) {
-        Comment updatedComment = commentService.update(commentMapper.requestToComment(id, request));
+        Comment updatedComment = commentService.update(commentMapper.requestToComment(commentId, request));
         return ResponseEntity.ok(
                 commentMapper.commentToResponse(updatedComment)
         );
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        commentService.deleteById(id);
+    @CommentAccessVerifiable
+    @DeleteMapping("/{commentId}/{userId}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long commentId) {
+        commentService.deleteById(commentId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
