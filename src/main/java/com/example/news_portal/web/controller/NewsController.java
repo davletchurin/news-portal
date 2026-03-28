@@ -1,5 +1,6 @@
 package com.example.news_portal.web.controller;
 
+import com.example.news_portal.aop.NewsAccessVerifiable;
 import com.example.news_portal.entity.News;
 import com.example.news_portal.mapper.NewsMapper;
 import com.example.news_portal.service.NewsService;
@@ -41,18 +42,20 @@ public class NewsController {
         );
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<NewsResponse> update(@PathVariable Long id,
+    @NewsAccessVerifiable
+    @PutMapping("/{newsId}/{userId}")
+    public ResponseEntity<NewsResponse> update(@PathVariable Long newsId,
                                                @RequestBody @Valid UpsertNewsRequest request) {
-        News updatedNews = newsService.update(newsMapper.requestToNews(id, request));
+        News updatedNews = newsService.update(newsMapper.requestToNews(newsId, request));
         return ResponseEntity.ok(
                 newsMapper.newsToResponse(updatedNews)
         );
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        newsService.deleteById(id);
+    @NewsAccessVerifiable
+    @DeleteMapping("/{newsId}/{userId}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long newsId) {
+        newsService.deleteById(newsId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
