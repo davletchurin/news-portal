@@ -5,7 +5,9 @@ import com.example.news_portal.entity.User;
 import com.example.news_portal.repository.UserRepository;
 import com.example.news_portal.service.UserService;
 import com.example.news_portal.utils.BeanUtils;
+import com.example.news_portal.web.model.UserFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -18,6 +20,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> findAll(UserFilter filter) {
+        return userRepository.findAll(PageRequest.of(filter.getPageNumber(), filter.getPageSize())).getContent();
     }
 
     @Override

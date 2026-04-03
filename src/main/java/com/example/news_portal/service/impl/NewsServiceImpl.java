@@ -9,7 +9,9 @@ import com.example.news_portal.service.NewsCategoryService;
 import com.example.news_portal.service.NewsService;
 import com.example.news_portal.service.UserService;
 import com.example.news_portal.utils.BeanUtils;
+import com.example.news_portal.web.model.NewsFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -24,6 +26,11 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public List<News> findAll() {
         return newsRepository.findAll();
+    }
+
+    @Override
+    public List<News> findAll(NewsFilter filter) {
+        return newsRepository.findAll(PageRequest.of(filter.getPageNumber(), filter.getPageSize())).getContent();
     }
 
     @Override

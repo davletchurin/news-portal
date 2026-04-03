@@ -4,6 +4,7 @@ import com.example.news_portal.entity.User;
 import com.example.news_portal.mapper.UserMapper;
 import com.example.news_portal.service.UserService;
 import com.example.news_portal.web.model.UpsertUserRequest;
+import com.example.news_portal.web.model.UserFilter;
 import com.example.news_portal.web.model.UserListResponse;
 import com.example.news_portal.web.model.UserResponse;
 import jakarta.validation.Valid;
@@ -20,9 +21,9 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
-    public ResponseEntity<UserListResponse> findAll() {
+    public ResponseEntity<UserListResponse> findAll(UserFilter filter) {
         return ResponseEntity.ok(
-                userMapper.userListToUserListResponse(userService.findAll())
+                userMapper.userListToUserListResponse(userService.findAll(filter))
         );
     }
 

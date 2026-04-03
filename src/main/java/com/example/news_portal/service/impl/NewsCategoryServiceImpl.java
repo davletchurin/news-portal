@@ -5,7 +5,9 @@ import com.example.news_portal.entity.NewsCategory;
 import com.example.news_portal.repository.NewsCategoryRepository;
 import com.example.news_portal.service.NewsCategoryService;
 import com.example.news_portal.utils.BeanUtils;
+import com.example.news_portal.web.model.NewsCategoryFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -18,6 +20,11 @@ public class NewsCategoryServiceImpl implements NewsCategoryService {
     @Override
     public List<NewsCategory> findAll() {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public List<NewsCategory> findAll(NewsCategoryFilter filter) {
+        return categoryRepository.findAll(PageRequest.of(filter.getPageNumber(), filter.getPageSize())).getContent();
     }
 
     @Override

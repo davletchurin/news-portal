@@ -4,6 +4,7 @@ import com.example.news_portal.aop.NewsAccessVerifiable;
 import com.example.news_portal.entity.News;
 import com.example.news_portal.mapper.NewsMapper;
 import com.example.news_portal.service.NewsService;
+import com.example.news_portal.web.model.NewsFilter;
 import com.example.news_portal.web.model.NewsListResponse;
 import com.example.news_portal.web.model.NewsResponse;
 import com.example.news_portal.web.model.UpsertNewsRequest;
@@ -21,9 +22,9 @@ public class NewsController {
     private final NewsMapper newsMapper;
 
     @GetMapping
-    public ResponseEntity<NewsListResponse> findAll() {
+    public ResponseEntity<NewsListResponse> findAll(NewsFilter filter) {
         return ResponseEntity.ok(
-                newsMapper.newsListToNewsListResponse(newsService.findAll())
+                newsMapper.newsListToNewsListResponse(newsService.findAll(filter))
         );
     }
 

@@ -3,6 +3,7 @@ package com.example.news_portal.web.controller;
 import com.example.news_portal.entity.NewsCategory;
 import com.example.news_portal.mapper.NewsCategoryMapper;
 import com.example.news_portal.service.NewsCategoryService;
+import com.example.news_portal.web.model.NewsCategoryFilter;
 import com.example.news_portal.web.model.NewsCategoryListResponse;
 import com.example.news_portal.web.model.NewsCategoryResponse;
 import com.example.news_portal.web.model.UpsertNewsCategoryRequest;
@@ -20,9 +21,9 @@ public class NewsCategoryController {
     private final NewsCategoryMapper categoryMapper;
 
     @GetMapping
-    public ResponseEntity<NewsCategoryListResponse> findAll() {
+    public ResponseEntity<NewsCategoryListResponse> findAll(NewsCategoryFilter filter) {
         return ResponseEntity.ok(
-                categoryMapper.newsCategoryListToNewsCategoryListResponse(categoryService.findAll())
+                categoryMapper.newsCategoryListToNewsCategoryListResponse(categoryService.findAll(filter))
         );
     }
 
