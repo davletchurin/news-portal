@@ -6,5 +6,5 @@ import java.util.List;
 
 @Data
 public class NewsListResponse {
-    List<NewsResponse> news;
+    List<NewsResponseWithCommentsCount> news;
 }

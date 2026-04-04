@@ -4,6 +4,7 @@ import com.example.news_portal.aop.CommentAccessVerifiable;
 import com.example.news_portal.entity.Comment;
 import com.example.news_portal.mapper.CommentMapper;
 import com.example.news_portal.service.CommentService;
+import com.example.news_portal.web.model.CommentFilter;
 import com.example.news_portal.web.model.CommentListResponse;
 import com.example.news_portal.web.model.CommentResponse;
 import com.example.news_portal.web.model.UpsertCommentRequest;
@@ -21,9 +22,9 @@ public class CommentController {
     private final CommentMapper commentMapper;
 
     @GetMapping
-    public ResponseEntity<CommentListResponse> findAll() {
+    public ResponseEntity<CommentListResponse> findAll(CommentFilter filter) {
         return ResponseEntity.ok(
-                commentMapper.commentListToCommentListResponse(commentService.findAll())
+                commentMapper.commentListToCommentListResponse(commentService.findAll(filter))
         );
     }
 

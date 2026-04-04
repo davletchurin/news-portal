@@ -5,11 +5,14 @@ import com.example.news_portal.entity.User;
 import com.example.news_portal.exception.EntityNotFoundException;
 import com.example.news_portal.entity.Comment;
 import com.example.news_portal.repository.CommentRepository;
+import com.example.news_portal.repository.CommentSpecification;
 import com.example.news_portal.service.CommentService;
 import com.example.news_portal.service.NewsService;
 import com.example.news_portal.service.UserService;
 import com.example.news_portal.utils.BeanUtils;
+import com.example.news_portal.web.model.CommentFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
@@ -24,6 +27,14 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> findAll() {
         return commentRepository.findAll();
+    }
+
+    @Override
+    public List<Comment> findAll(CommentFilter filter) {
+        return commentRepository.findAll(
+                CommentSpecification.withFilter(filter),
+                PageRequest.of(filter.getPageNumber(), filter.getPageSize())
+        ).getContent();
     }
 
     @Override
@@ -56,5 +67,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void deleteById(Long id) {
         commentRepository.deleteById(id);
+    }
+
+    @Override
+    public long countByNewsId(Long newsId) {
+        return commentRepository.countByNewsId(newsId);
     }
 }

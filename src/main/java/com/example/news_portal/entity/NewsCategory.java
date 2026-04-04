@@ -2,17 +2,20 @@ package com.example.news_portal.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldNameConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "news_categories")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @ToString
+@FieldNameConstants
 public class NewsCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

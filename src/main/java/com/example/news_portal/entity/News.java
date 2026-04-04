@@ -2,6 +2,7 @@ package com.example.news_portal.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,11 +12,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "news")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @ToString
+@FieldNameConstants
 public class News {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
