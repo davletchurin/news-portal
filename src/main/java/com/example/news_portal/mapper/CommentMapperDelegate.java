@@ -7,6 +7,8 @@ import com.example.news_portal.web.model.CommentResponse;
 import com.example.news_portal.web.model.UpsertCommentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 public abstract class CommentMapperDelegate implements CommentMapper {
     @Autowired
     private UserService userService;
@@ -36,5 +38,12 @@ public abstract class CommentMapperDelegate implements CommentMapper {
         response.setNewsId(comment.getNews().getId());
         response.setUserId(comment.getUser().getId());
         return response;
+    }
+
+    @Override
+    public List<CommentResponse> commentListToResponseList(List<Comment> comments) {
+        return comments.stream()
+                .map(this::commentToResponse)
+                .toList();
     }
 }
