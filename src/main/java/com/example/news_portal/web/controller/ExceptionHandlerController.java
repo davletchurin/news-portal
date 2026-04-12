@@ -1,5 +1,6 @@
 package com.example.news_portal.web.controller;
 
+import com.example.news_portal.exception.AccessVerifiableException;
 import com.example.news_portal.exception.EntityNotFoundException;
 import com.example.news_portal.web.model.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -36,5 +37,13 @@ public class ExceptionHandlerController {
         String errorMessage = String.join("; ", errorMessages);
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(errorMessage));
+    }
+
+    @ExceptionHandler(AccessVerifiableException.class)
+    public ResponseEntity<ErrorResponse> noAccess(AccessVerifiableException ex) {
+        log.error("Error when update or delete entity ", ex);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                new ErrorResponse(ex.getMessage())
+        );
     }
 }

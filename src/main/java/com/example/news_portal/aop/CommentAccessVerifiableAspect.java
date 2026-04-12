@@ -1,10 +1,10 @@
 package com.example.news_portal.aop;
 
+import com.example.news_portal.exception.AccessVerifiableException;
 import com.example.news_portal.service.CommentService;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,30 +13,25 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.HandlerMapping;
 
+import java.text.MessageFormat;
 import java.util.Map;
 
 @Aspect
 @Component
-@Slf4j
-public class CommentAccessVerifiableAspect { // PUT, DELETE /api/comment/{commentId}/{userId}
+public class CommentAccessVerifiableAspect {
     @Autowired
     CommentService commentService;
 
-    @Around("@annotation(CommentAccessVerifiable)")
-    public Object logAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        log.info("Around method: {} is called", proceedingJoinPoint.getSignature().getName());
-
+    @Before("@annotation(CommentAccessVerifiable)")
+    public void accessBefore(JoinPoint joinPoint) {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
         var pathVariables = (Map<String, String>)request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-        Long userIdInitializedRequest = Long.parseLong(pathVariables.get("userId"));
+        Long userIdThatInitializedRequest = Long.parseLong(pathVariables.get("userId"));
         Long commentId = Long.parseLong(pathVariables.get("commentId"));
-        Long userIdThatCreatedNews = commentService.findById(commentId).getUser().getId();
-        if (userIdInitializedRequest.equals(userIdThatCreatedNews)) {
-            return proceedingJoinPoint.proceed();
-        } else {
-            log.info("Editing and deleting a comment is allowed only to the user who created it");
-            return null;
+        Long userIdThatCreatedComment = commentService.findById(commentId).getUser().getId();
+        if (!userIdThatInitializedRequest.equals(userIdThatCreatedComment)) {
+            throw new AccessVerifiableException(MessageFormat.format("User with ID {0} does not have access to this operation", userIdThatInitializedRequest));
         }
     }
 }
