@@ -2,6 +2,7 @@ spring:
   application:
     name: news-portal
   jpa:
+    open-in-view: false
     generate-ddl: true
     hibernate:
       ddl-auto: ${HIBERNATE_DDL_AUTO:update}
