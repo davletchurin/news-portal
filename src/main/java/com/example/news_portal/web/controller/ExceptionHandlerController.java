@@ -8,6 +8,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -43,6 +44,14 @@ public class ExceptionHandlerController {
     public ResponseEntity<ErrorResponse> noAccess(AccessVerifiableException ex) {
         log.error("Error when update or delete entity ", ex);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                new ErrorResponse(ex.getMessage())
+        );
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ErrorResponse> methodNotAllowed(HttpRequestMethodNotSupportedException ex) {
+        log.error("Error when calling not supported method ", ex);
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(
                 new ErrorResponse(ex.getMessage())
         );
     }
