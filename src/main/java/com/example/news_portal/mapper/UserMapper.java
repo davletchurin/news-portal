@@ -16,6 +16,8 @@ public interface UserMapper {
     User requestToUser(UpsertUserRequest request);
     @Mapping(source = "userId", target = "id")
     User requestToUser(Long userId, UpsertUserRequest request);
+    @Mapping(target = "news", ignore = true)
+    @Mapping(target = "comments", ignore = true)
     UserResponse userToResponse(User user);
     List<UserResponse> userListToResponseList(List<User> users);
     default UserListResponse userListToUserListResponse(List<User> users) {

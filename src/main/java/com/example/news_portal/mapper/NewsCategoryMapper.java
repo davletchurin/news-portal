@@ -16,6 +16,7 @@ public interface NewsCategoryMapper {
     NewsCategory requestToNewsCategory(UpsertNewsCategoryRequest request);
     @Mapping(source = "categoryId", target = "id")
     NewsCategory requestToNewsCategory(Long categoryId, UpsertNewsCategoryRequest request);
+    @Mapping(target = "news", ignore = true)
     NewsCategoryResponse newsCategoryToResponse(NewsCategory category);
     List<NewsCategoryResponse> newsCategoryListToResposeList(List<NewsCategory> categories);
     default NewsCategoryListResponse newsCategoryListToNewsCategoryListResponse(List<NewsCategory> categories) {
