@@ -30,7 +30,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> findAll(CommentFilter filter) {
+    public List<Comment> findAllNewsId(CommentFilter filter) { // TODO: Можно и без Specification
         return commentRepository.findAll(
                 CommentSpecification.withFilter(filter),
                 PageRequest.of(filter.getPageNumber(), filter.getPageSize())

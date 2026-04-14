@@ -5,6 +5,7 @@ import com.example.news_portal.entity.User;
 import com.example.news_portal.exception.EntityNotFoundException;
 import com.example.news_portal.entity.News;
 import com.example.news_portal.repository.NewsRepository;
+import com.example.news_portal.repository.NewsSpecification;
 import com.example.news_portal.service.NewsCategoryService;
 import com.example.news_portal.service.NewsService;
 import com.example.news_portal.service.UserService;
@@ -30,7 +31,10 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public List<News> findAll(NewsFilter filter) {
-        return newsRepository.findAll(PageRequest.of(filter.getPageNumber(), filter.getPageSize())).getContent();
+        return newsRepository.findAll(
+                NewsSpecification.withFilter(filter),
+                PageRequest.of(filter.getPageNumber(), filter.getPageSize())
+        ).getContent();
     }
 
     @Override
