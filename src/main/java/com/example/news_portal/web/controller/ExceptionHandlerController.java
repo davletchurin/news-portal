@@ -23,7 +23,10 @@ public class ExceptionHandlerController {
     public ResponseEntity<ErrorResponse> notFound(EntityNotFoundException ex) {
         log.error("Error when trying to get an entity ", ex);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ErrorResponse(ex.getMessage())
+                new ErrorResponse(
+                        HttpStatus.NOT_FOUND.value(),
+                        "Not Found",
+                        ex.getMessage())
         );
     }
 
@@ -37,14 +40,22 @@ public class ExceptionHandlerController {
 
         String errorMessage = String.join("; ", errorMessages);
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(errorMessage));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new ErrorResponse(
+                        HttpStatus.BAD_REQUEST.value(),
+                        "Bad Request",
+                        errorMessage)
+        );
     }
 
     @ExceptionHandler(AccessVerifiableException.class)
     public ResponseEntity<ErrorResponse> noAccess(AccessVerifiableException ex) {
         log.error("Error when update or delete entity ", ex);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
-                new ErrorResponse(ex.getMessage())
+                new ErrorResponse(
+                        HttpStatus.UNAUTHORIZED.value(),
+                        "Unauthorized",
+                        ex.getMessage())
         );
     }
 
@@ -52,7 +63,10 @@ public class ExceptionHandlerController {
     public ResponseEntity<ErrorResponse> methodNotAllowed(HttpRequestMethodNotSupportedException ex) {
         log.error("Error when calling not supported method ", ex);
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(
-                new ErrorResponse(ex.getMessage())
+                new ErrorResponse(
+                        HttpStatus.METHOD_NOT_ALLOWED.value(),
+                        "Method Not Allowed",
+                        ex.getMessage())
         );
     }
 }

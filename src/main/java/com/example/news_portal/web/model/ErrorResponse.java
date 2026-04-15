@@ -3,10 +3,24 @@ package com.example.news_portal.web.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema
 public class ErrorResponse {
-    private String errorMessage;
+    private int status;
+    private String error;
+    private String message;
+    private LocalDateTime timestamp;
+
+    public ErrorResponse(int status, String error, String message) {
+        this.status = status;
+        this.error = error;
+        this.message = message;
+        this.timestamp = LocalDateTime.now();
+    }
 }
