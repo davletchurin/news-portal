@@ -1,11 +1,14 @@
 spring:
   application:
     name: news-portal
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    enabled: true
   jpa:
     open-in-view: false
     generate-ddl: true
     hibernate:
-      ddl-auto: ${HIBERNATE_DDL_AUTO:update}
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
