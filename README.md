@@ -6,12 +6,14 @@
 ![Java Version](https://img.shields.io/badge/Java-21-blue)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5-brightgreen)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-latest-blue)
+![Liquibase](https://img.shields.io/badge/Liquibase-4.31-orange)
 
 ---
 
 ## 🚀 Основные возможности (Features)
 
 * **Content Management:** Полный CRUD для пользователей, новостей, категорий и комментариев.
+* **Database Versioning:** Управление структурой и миграциями базы данных с помощью **Liquibase** (используется подход Formatted SQL).
 * **Advanced Filtering:** Использование **Spring Data Specifications** для гибкой фильтрации новостей (по авторам/категориям) и комментариев.
 * **Performance:** Оптимизация запросов через **EntityGraph** (решение проблемы N+1).
 * **Pagination:** Все списки поддерживают пагинацию для эффективной работы с большими объемами данных.
@@ -23,7 +25,7 @@
 ## 🛠 Технологический стек
 
 * **Runtime:** Java 21, Spring Boot 3.5
-* **Database:** PostgreSQL, Spring Data JPA
+* **Database & Migrations:** PostgreSQL, Spring Data JPA, Liquibase 4.x
 * **Mapping & Tools:** MapStruct 1.6, Lombok
 * **API Docs:** SpringDoc OpenAPI (Swagger UI)
 * **CI/CD:** GitHub Actions (автоматическая сборка проекта)
@@ -33,7 +35,9 @@
 
 ## 🏗 Архитектура и база данных
 
-Проект следует слоистой архитектуре (Controller -> Service -> Repository). Связи между сущностями визуализированы ниже:
+Проект следует слоистой архитектуре (Controller -> Service -> Repository). Инициализация схемы данных и управление структурой таблиц полностью автоматизированы через **Liquibase**.
+
+Связи между сущностями визуализированы ниже:
 
 ```mermaid
 erDiagram
@@ -97,7 +101,7 @@ docker compose up --build
 ## 🗺 Дорожная карта (Roadmap)
 - [x] Настройка CI/CD (GitHub Actions).
 - [x] Dockerization (Multi-stage build).
-- [ ] Внедрение **Liquibase** для управления миграциями БД.
+- [x] Внедрение **Liquibase** для управления миграциями БД.
 - [ ] Реализация **Spring Security + JWT** (авторизация и аутентификация).
 - [ ] Покрытие кода тестами (**JUnit 5, Mockito, Testcontainers**).
 - [ ] Добавление Soft Delete для новостей и комментариев.
